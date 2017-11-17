@@ -9,9 +9,6 @@ pipeline {
             ls -l
             """
         }
-        steps {
-            echo "Another step"
-        }
     }
     stage("Build") {
         steps {
