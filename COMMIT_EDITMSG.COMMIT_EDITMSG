@@ -1,0 +1,27 @@
+Add Jenkins pipeline file
+
+# --------------
+# Please enter the commit message for your changes. Everything below
+# this paragraph is ignored, and an empty message aborts the commit.
+# Just close the window to accept your message.
+diff --git a/Jenkinsfile b/Jenkinsfile
+new file mode 100644
+index 0000000..71f73b6
+--- /dev/null
++++ b/Jenkinsfile
+@@ -0,0 +1,15 @@
++node("deploy-erase-improve") {
++    stage("Checkout") {
++        checkout scm
++        sh """
++        pwd
++        ls -l
++        """
++    }
++    stage("Build") {
++        sh '''#!/bin/bash
++set -xe
++env
++'''
++    }
++}
