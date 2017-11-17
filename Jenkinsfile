@@ -1,4 +1,4 @@
-node("deploy-erase-improve") {
+node {
     stage("Checkout") {
         checkout scm
         sh """
