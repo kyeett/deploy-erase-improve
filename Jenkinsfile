@@ -2,21 +2,25 @@ pipeline {
   agent any
   stages {
     stage("Checkout") {
-        checkout scm
-        sh """
-        pwd
-        ls -l
-        """
+        steps {
+            checkout scm
+            sh """
+            pwd
+            ls -l
+            """
+        }
     }
     stage("Build") {
-        sh '''#!/bin/bash
-set -xe
-env
+        steps {
+            sh '''#!/bin/bash
+            set -xe
+            env
 
-echo "Number: $GERRIT_CHANGE_NUMBER"
-echo "Event: $GERRIT_EVENT_TYPE"
+            echo "Number: $GERRIT_CHANGE_NUMBER"
+            echo "Event: $GERRIT_EVENT_TYPE"
 
-'''
+            '''
+        }
     }
     stage('Stuff completed') {
       steps {
