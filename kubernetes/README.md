@@ -4,6 +4,9 @@ brew install kubectl
 
 # Installation on Linux
 
+# Access service
+http://192.168.0.12:8001/api/v1/proxy/namespaces/default/services/hello-minikube:8080/
+
 # Commands on Linux
 [Getting started](https://kubernetes.io/docs/getting-started-guides/minikube/)
 
