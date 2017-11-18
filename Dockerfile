@@ -1,3 +1,6 @@
-FROM alpine
+FROM python:2.7-alpine
 
-CMD ls
+ADD ./requirements.txt ./
+ADD ./app /app
+
+RUN pip install -r requirements.txt

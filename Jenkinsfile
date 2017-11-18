@@ -22,19 +22,19 @@ pipeline {
     stage("Build") {
         steps {
             sh '''#!/bin/bash
-set -xe
-DOCKER_IMAGE=$DOCKER_REGISTRY/$PROJECT:$GIT_COMMIT
-env
+            set -xe
+            DOCKER_IMAGE=$DOCKER_REGISTRY/$PROJECT:$GIT_COMMIT
+            env
 
-echo "Image: $DOCKER_IMAGE"
-echo "Start instance for trial"
-ls -la
+            echo "Image: $DOCKER_IMAGE"
+            echo "Start instance for trial"
+            ls -la
 
-docker build -t $DOCKER_IMAGE .
-docker push $DOCKER_IMAGE
-docker rmi -f $DOCKER_IMAGE | true
+            docker build -t $DOCKER_IMAGE .
+            docker push $DOCKER_IMAGE
+            docker rmi -f $DOCKER_IMAGE | true
 
-'''
+            '''
         }
     }
     stage("Deploy") {
