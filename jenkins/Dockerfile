@@ -27,6 +27,8 @@ RUN chmod 777 -R $HOME/
 # Install jq
 RUN apk update \
  && apk add jq \
+ && apk add docker \
  && rm -rf /var/cache/apk/*
+
 
 USER jenkins
