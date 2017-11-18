@@ -7,6 +7,8 @@ ADD https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/a
 
 ENV HOME=/config
 
+USER root
+
 RUN set -x && \
     apk add --no-cache curl ca-certificates && \
     chmod +x /usr/local/bin/kubectl && \
@@ -16,3 +18,5 @@ RUN set -x && \
     \
     # Basic check it works.
     kubectl version --client
+
+USER jenkins
