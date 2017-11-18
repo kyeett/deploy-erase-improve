@@ -3,6 +3,8 @@ pipeline {
   environment {
     DISABLE_AUTH = 'true'
     DB_ENGINE    = 'sqlite'
+    K8S_PORT     = "8001"
+    K8S_ADDR     = "192.168.0.12"
   }
   stages {
     stage("Checkout") {
@@ -56,8 +58,6 @@ fi
                 GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | head -c12)
                 PROJECT=webreview
                 K8S_NAME=$PROJECT-$GERRIT_CHANGE_NUMBER
-                K8S_PORT=8001
-                K8S_ADDR=192.168.0.12
                 K8S_URL="http://$K8S_ADDR:$K8S_PORT"
                 DOCKER_IMAGE=flask-trial
                 DOCKER_REGISTRY=192.168.0.11:5000
