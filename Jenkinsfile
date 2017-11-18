@@ -57,6 +57,7 @@ pipeline {
                 SERVICE_URL=$K8S_URL/api/v1/proxy/namespaces/default/services/$K8S_NAME:8080/
 
                 echo "please access $SERVICE_URL"
+                echo "please access <a href=\"$SERVICE_URL\">$K8S_NAME</a>"
 
             '''
         }

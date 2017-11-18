@@ -9,7 +9,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "<center><h1>Hej, v'a'rlden!</h1></center>"
+    return """
+        <center>
+            <h1>Hej, v'a'rlden!</h1>
+            <br/>
+            <br/>
+            <br/>
+            <h3>(och allt annat)</h3>
+        </center>"""
 
 
 if __name__ == '__main__':
