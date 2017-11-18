@@ -88,18 +88,24 @@ kubectl delete deployment hello-magnus
 
 
 ```
-GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9_' | fold -w 10 | head -n 1)
+GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | fold -w 10 | head -n 1)
 PROJECT=webreview
 K8S_NAME=$PROJECT-$GERRIT_CHANGE_NUMBER
-K8S_ADDR=192.168.0.12:8001
-IMAGE=hello_world
+K8S_PORT=8001
+K8S_ADDR=192.168.0.12
+K8S_URL="http://$K8S_ADDR:$K8S_PORT"
+DOCKER_IMAGE=gcr.io/google_containers/echoserver:1.4
+
+kubectl config set-cluster minikube --server=$K8S_URL
 
 echo "Start deploy to kubernetes"
-kubectl run $K8S_NAME --image-pull-policy="Always" --image=gcr.io/google_containers/echoserver:1.4 --port=8080
+kubectl run $K8S_NAME --image-pull-policy="Always" --image=$DOCKER_IMAGE --port=8080
 kubectl expose deploy $K8S_NAME --type=NodePort
-kubectl get svc $K8S_NAME -o json | jq .spec.ports[0].nodePort
-PORT=$(kubectl get svc $K8S_NAME -o json | jq .spec.ports[0].nodePort)
-INSTANCE_URL="http://$K8S_ADDR"
-echo "please access $INSTANCE_URL"
-update_consul "$INSTANCE_URL"
+#kubectl get svc $K8S_NAME -o json | jq .spec.ports[0].nodePort
+#PORT=$(kubectl get svc $K8S_NAME -o json | jq .spec.ports[0].nodePort)
+SERVICE_URL=$K8S_URL/api/v1/proxy/namespaces/default/services/$K8S_NAME:8080/
+
+echo "please access $SERVICE_URL"
+
+#update_consul "$INSTANCE_URL"
 ```
