@@ -1,13 +1,13 @@
 FROM jenkinsci/blueocean:latest
 
+ENV HOME=/config
+
+USER root
+
 # Install kubectl
 # Note: Latest version may be found on:
 # https://aur.archlinux.org/packages/kubectl-bin/
 ADD https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/amd64/kubectl /usr/local/bin/kubectl
-
-ENV HOME=/config
-
-USER root
 
 RUN set -x && \
     apk add --no-cache curl ca-certificates && \
@@ -29,15 +29,21 @@ RUN apk update \
  && apk add jq \
 # && apk add docker \
  && apk add openrc \
+ && apk add curl \
  && apk add alpine-sdk \
  && rm -rf /var/cache/apk/*
 
 #RUN rc-update add docker boot
 
+# https://forums.docker.com/t/how-can-i-run-docker-command-inside-a-docker-container/337/7
+RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.03.1-ce.tgz && \
+            tar --strip-components=1 -xvzf docker-17.03.1-ce.tgz -C /usr/local/bin
+
+RUN chown -R jenkins:jenkins /var/run/docker.sock
 
 #RUN sleep 10
 #RUN service docker start#
 #RUN sleep 10
 #RUN docker ps
 
-#USER jenkins
+USER jenkins
