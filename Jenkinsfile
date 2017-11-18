@@ -26,7 +26,7 @@ pipeline {
         steps {
             sh '''#!/bin/bash
 
-
+                GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | fold -w 10 | head -n 1)
                 PROJECT=webreview
                 K8S_NAME=$PROJECT-$GERRIT_CHANGE_NUMBER
                 K8S_PORT=8001
