@@ -24,11 +24,17 @@ RUN kubectl config use-context tester
 RUN kubectl config view
 RUN chmod 777 -R $HOME/
 
-# Install jq
+# Install jq and docker
 RUN apk update \
  && apk add jq \
  && apk add docker \
+ && apk add openrc \
  && rm -rf /var/cache/apk/*
 
+RUN rc-update add docker boot
+#RUN sleep 10
+#RUN service docker start#
+#RUN sleep 10
+#RUN docker ps
 
 USER jenkins
