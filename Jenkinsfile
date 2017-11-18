@@ -1,7 +1,8 @@
 pipeline {
   agent any
+
   environment {
-    GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | head -c12)
+    GERRIT_CHANGE_NUMBER=10.60.10
     PROJECT=webreview
     K8S_NAME=$PROJECT-$GERRIT_CHANGE_NUMBER
     K8S_PORT=8001
@@ -10,6 +11,7 @@ pipeline {
     DOCKER_IMAGE=flask-trial
     DOCKER_REGISTRY=192.168.0.11:5000
   }
+
   stages {
     stage("Checkout") {
         steps {
@@ -23,11 +25,7 @@ pipeline {
     }
     stage("Build") {
         steps {
-            sh '''#!/bin/bash
-set -xe
-env
 
-'''
         }
     }
     stage("Deploy") {
