@@ -27,14 +27,17 @@ RUN chmod 777 -R $HOME/
 # Install jq and docker
 RUN apk update \
  && apk add jq \
- && apk add docker \
+# && apk add docker \
  && apk add openrc \
+ && apk add alpine-sdk \
  && rm -rf /var/cache/apk/*
 
-RUN rc-update add docker boot
+#RUN rc-update add docker boot
+
+
 #RUN sleep 10
 #RUN service docker start#
 #RUN sleep 10
 #RUN docker ps
 
-USER jenkins
+#USER jenkins
