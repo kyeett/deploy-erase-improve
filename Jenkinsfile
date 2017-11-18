@@ -1,5 +1,15 @@
 pipeline {
   agent any
+  environment {
+    GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | head -c12)
+    PROJECT=webreview
+    K8S_NAME=$PROJECT-$GERRIT_CHANGE_NUMBER
+    K8S_PORT=8001
+    K8S_ADDR=192.168.0.12
+    K8S_URL="http://$K8S_ADDR:$K8S_PORT"
+    DOCKER_IMAGE=flask-trial
+    DOCKER_REGISTRY=192.168.0.11:5000
+  }
   stages {
     stage("Checkout") {
         steps {
@@ -14,13 +24,10 @@ pipeline {
     stage("Build") {
         steps {
             sh '''#!/bin/bash
-            set -xe
-            env
+set -xe
+env
 
-            echo "Number: $GERRIT_CHANGE_NUMBER"
-            echo "Event: $GERRIT_EVENT_TYPE"
-
-            '''
+'''
         }
     }
     stage("Deploy") {
@@ -28,14 +35,7 @@ pipeline {
             sh '''#!/bin/bash
                 set -xe
 
-                GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | head -c12)
-                PROJECT=webreview
-                K8S_NAME=$PROJECT-$GERRIT_CHANGE_NUMBER
-                K8S_PORT=8001
-                K8S_ADDR=192.168.0.12
-                K8S_URL="http://$K8S_ADDR:$K8S_PORT"
-                DOCKER_IMAGE=flask-trial
-                DOCKER_REGISTRY=192.168.0.11:5000
+
 
                 echo "Set up connection with minikube cluster"
                 kubectl config set-cluster minikube --server=$K8S_URL
