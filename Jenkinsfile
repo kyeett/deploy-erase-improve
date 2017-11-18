@@ -7,6 +7,7 @@ pipeline {
             sh """
             pwd
             ls -l
+            env
             """
         }
     }
@@ -40,7 +41,7 @@ pipeline {
                 kubectl config set-cluster minikube --server=$K8S_URL
 
                 echo "Start deploy to kubernetes"
-                kubectl run $K8S_NAME --image-pull-policy="Always" --image=$DOCKER_REGISTRY/$DOCKER_IMAG --port=8080
+                kubectl run $K8S_NAME --image-pull-policy="Always" --image=$DOCKER_REGISTRY/$DOCKER_IMAGE --port=8080
                 kubectl expose deploy $K8S_NAME --type=NodePort
                 SERVICE_URL=$K8S_URL/api/v1/proxy/namespaces/default/services/$K8S_NAME:8080/
 
