@@ -25,6 +25,7 @@ pipeline {
     stage("Deploy") {
         steps {
             sh '''#!/bin/bash
+                set -xe
 
                 GERRIT_CHANGE_NUMBER=$(head -c 500 /dev/urandom | tr -dc 'a-z0-9' | head -c12)
                 PROJECT=webreview
