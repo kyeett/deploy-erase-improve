@@ -19,4 +19,14 @@ RUN set -x && \
     # Basic check it works.
     kubectl version --client
 
+RUN kubectl config set-context tester --cluster=minikube --namespace=default --user=test
+RUN kubectl config use-context tester
+RUN kubectl config view
+RUN chmod 777 -R $HOME/
+
+# Install jq
+RUN apk update \
+ && apk add jq \
+ && rm -rf /var/cache/apk/*
+
 USER jenkins
