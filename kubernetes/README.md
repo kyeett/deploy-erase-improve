@@ -26,9 +26,13 @@ INSTANCE_URL="$K8S_ADDR:$PORT"
 echo $INSTANCE_URL
 
 minikube dashboard
-kubectl proxy --address="0.0.0.0"
+kubectl proxy --address='0.0.0.0' --port=8001 --accept-hosts='^*$'
 
 curl localhost:8080/api/v1/nodes
+
+kubectl config set-cluster minikube --server=http://$K8S_ADDR:8001
+kubectl config view
+kubectl config use-context minikube
 
 ´´´
 
