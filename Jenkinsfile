@@ -1,8 +1,9 @@
 pipeline {
+
   agent any
 
   environment {
-    GERRIT_CHANGE_NUMBER="10.60.10"
+    GERRIT_CHANGE_NUMBER='10.60.10'
     PROJECT="webreview"
     K8S_NAME="$PROJECT-$GERRIT_CHANGE_NUMBER"
     K8S_PORT="8001"
