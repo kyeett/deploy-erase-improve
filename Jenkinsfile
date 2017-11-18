@@ -28,6 +28,8 @@ env
 
 echo "Image: $DOCKER_IMAGE"
 echo "Start instance for trial"
+ls -la
+
 docker build -t $DOCKER_IMAGE .
 docker push $DOCKER_IMAGE
 docker rmi -f $DOCKER_IMAGE | true
